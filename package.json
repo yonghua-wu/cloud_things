@@ -1,19 +1,26 @@
 {
   "name": "cloud_things",
   "version": "1.0.0",
-  "description": "",
+  "description": "云物",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "export NODE_ENV=development&&node app.js",
+    "build": "export NODE_ENV=production&&node app.js",
+    "win_dev": "set NODE_ENV=development&&node app.js",
+    "win_build": "set NODE_ENV=production&&node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/woxiangchixingxing/CloudThings.git"
-  },
-  "author": "",
+  "author": "woxiangchixingxing",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/woxiangchixingxing/CloudThings/issues"
-  },
-  "homepage": "https://github.com/woxiangchixingxing/CloudThings#readme"
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "log4js": "^6.1.0",
+    "moment": "^2.24.0",
+    "mysql2": "^2.0.2",
+    "sequelize": "^5.21.2"
+  }
 }
