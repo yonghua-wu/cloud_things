@@ -3,8 +3,10 @@ const cors = require('koa2-cors')
 const bodyParser = require('koa-bodyparser')
 const Routers = require('./routes/index.js')
 const CONFIG = require('./config/config.js')
+require('./config/mongoDB')
 
 const errorHandle = require('./middleware/ErrorHandle')
+const authHandle = require('./middleware/AuthHandle')
 
 global.HttpError = require('./utils/HttpError')
 global.Console = require('./utils/Console')
@@ -21,6 +23,8 @@ app.use(cors({
 
 // 捕获异常
 app.use(errorHandle)
+
+app.use(authHandle)
 
 app.use(bodyParser())
 app.use(Routers.routes())

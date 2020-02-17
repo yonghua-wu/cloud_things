@@ -1,5 +1,6 @@
 const crypto = require('crypto')
 const CONFIG = require('../config/config')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
   /**
@@ -28,5 +29,16 @@ module.exports = {
    */
   maskPassword(password) {
     return crypto.createHash('md5').update(CONFIG.PW_SECRET + password).digest('hex')
+  },
+  jwtDecode(token) {
+    if (!token) {
+      throw new HttpError(401)
+    }
+    let tokenInfo = jwt.decode(token)
+    if (!tokenInfo) {
+      throw new HttpError(400)
+    } else {
+      return tokenInfo
+    }
   }
 }

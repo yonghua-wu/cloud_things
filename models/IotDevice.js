@@ -23,12 +23,12 @@ IotDevice.init({
     allowNull: false
   },
   rulesId: {
-    type: Sequelize.INTEGER(11).UNSIGNED,
+    type: Sequelize.STRING(50),
     field: 'rules_id',
     allowNull: true
   },
   detailsId: {
-    type: Sequelize.INTEGER(11).UNSIGNED,
+    type: Sequelize.STRING(50),
     field: 'details_id',
     allowNull: true
   },
@@ -45,22 +45,22 @@ IotDevice.init({
     defaultValue: null,
     allowNull: true
   },
-  createdAt: {
+  createAt: {
     field: 'create_At',
     type: 'TIMESTAMP',
     allowNull: false,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     get() {
-      return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss')
+      return moment(this.getDataValue('createAt')).format('YYYY-MM-DD HH:mm:ss')
     }
   },
-  updatedAt: {
+  updateAt: {
     field: 'update_At',
     type: 'TIMESTAMP',
     allowNull: false,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     get() {
-      return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:mm:ss')
+      return moment(this.getDataValue('updateAt')).format('YYYY-MM-DD HH:mm:ss')
     }
   }
 },{
@@ -74,8 +74,8 @@ IotDevice.init({
 })
 
 if (process.env.NODE_ENV === 'development') { // 开发模式开启同步
-  // db.sync({ force: true })
-  db.sync()
+  db.sync({ force: true })
+  // db.sync()
 }
 
 class IotDevicesModel {

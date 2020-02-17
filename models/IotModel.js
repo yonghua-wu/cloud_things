@@ -1,5 +1,4 @@
 const db = require('../config/db.js')
-const moment = require('moment')
 const Sequelize = require('sequelize')
 const Model = Sequelize.Model
 
@@ -27,26 +26,26 @@ IotModel.init({
     allowNull: true
   },
   attributeId: {
-    type: Sequelize.INTEGER(11).UNSIGNED,
+    type: Sequelize.STRING(50),
     field: 'attribute_id',
     allowNull: false
   },
-  createdAt: {
-    field: 'create_At',
-    type: 'TIMESTAMP',
+  createAt: {
+    field: 'create_at',
+    type: Sequelize.DATE,
     allowNull: false,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    defaultValue: Sequelize.NOW,
     get() {
-      return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss')
+      return new Date(this.getDataValue('createAt')).getTime()
     }
   },
-  updatedAt: {
-    field: 'update_At',
-    type: 'TIMESTAMP',
+  updateAt: {
+    field: 'update_at',
+    type: Sequelize.DATE,
     allowNull: false,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    defaultValue: Sequelize.NOW,
     get() {
-      return moment(this.getDataValue('updatedAt')).format('YYYY-MM-DD HH:mm:ss')
+      return new Date(this.getDataValue('updateAt')).getTime()
     }
   }
 },{
@@ -60,8 +59,8 @@ IotModel.init({
 })
 
 if (process.env.NODE_ENV === 'development') { // 开发模式开启同步
-  // db.sync({ force: true })
-  db.sync()
+  db.sync({ force: true })
+  // db.sync()
 }
 
 class IotModelModel {
