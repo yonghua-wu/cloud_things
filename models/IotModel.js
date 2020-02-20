@@ -30,22 +30,22 @@ IotModel.init({
     field: 'attribute_id',
     allowNull: false
   },
-  createAt: {
-    field: 'create_at',
+  createdAt: {
+    field: 'created_at',
     type: Sequelize.DATE,
     allowNull: false,
     defaultValue: Sequelize.NOW,
     get() {
-      return new Date(this.getDataValue('createAt')).getTime()
+      return new Date(this.getDataValue('createdAt')).getTime()
     }
   },
-  updateAt: {
-    field: 'update_at',
+  updatedAt: {
+    field: 'updated_at',
     type: Sequelize.DATE,
     allowNull: false,
     defaultValue: Sequelize.NOW,
     get() {
-      return new Date(this.getDataValue('updateAt')).getTime()
+      return new Date(this.getDataValue('updatedAt')).getTime()
     }
   }
 },{
@@ -117,6 +117,7 @@ class IotModelModel {
         id: id
       }
     })
+    return await this.selectById(id)
   }
 }
 

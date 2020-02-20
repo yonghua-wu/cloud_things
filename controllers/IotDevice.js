@@ -16,35 +16,35 @@ class IotDevice {
    * @param {*} ctx 
    */
   static async details(ctx) {
-
+    ctx.status = 200
   }
   /**
    * 创建设备
    * @param {*} ctx 
    */
   static async create(ctx) {
-    
+    ctx.status = 201
   }
   /**
    * 修改设备
    * @param {*} ctx 
    */
   static async update(ctx) {
-    
+    ctx.status = 201
   }
   /**
    * 重新生成key
    * @param {*} ctx 
    */
   static async updateKey(ctx) {
-    
+    ctx.status = 201
   }
   /**
    * 删除设备
    * @param {*} ctx 
    */
   static async del(ctx) {
-    
+    ctx.status = 204
   }
 }
 

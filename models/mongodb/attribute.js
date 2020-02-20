@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const attribute = mongoose.Schema({
-  create_at: { type: String },
-  update_at: { type: String },
+  created_at: { type: String },
+  updated_at: { type: String },
   list: [{
     name: String,
     view_name: String,

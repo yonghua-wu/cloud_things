@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const IotModelModel = require('../models/IotModel')
 const attributeModel = require('../models/mongodb/attribute')
 const utils = require('../utils/utils')
@@ -27,7 +26,7 @@ class IotModel {
   static async details(ctx) {
     let modelId = ctx.params.id
     let model = await IotModelModel.selectById(modelId)
-    if (model || model.attributeId) {
+    if (model && model.attributeId) {
       let attributes = await attributeModel.findOne({_id: model.attributeId}, {_id: 0})
       let list = attributes.list.map( item => {
         let {name, view_name, value_type, default_value, unit} = item
@@ -74,8 +73,8 @@ class IotModel {
       })
     })
     let res = await attributeModel.create({
-      create_at: Date.now(),
-      update_at: Date.now(),
+      created_at: Date.now(),
+      updated_at: Date.now(),
       list: req.attributes
     })
     let row = {
@@ -84,6 +83,7 @@ class IotModel {
       description: req.description,
       attributeId: res.id
     }
+    res = {}
     res = await IotModelModel.create(row)
     ctx.status = 201
     ctx.body = res
@@ -93,22 +93,60 @@ class IotModel {
    * @param {*} ctx 
    */
   static async update(ctx) {
+    let modelId = ctx.params.id
     let req = ctx.request.body
-    let userInfo = utils.jwtDecode(ctx.header.Authorization || ctx.header.authorization)
-    utils.checkParams(req, {
-      id: true,
-      name: false,
-      description: false,
-      attributes: false
-    })
-
+    let model = await IotModelModel.selectById(modelId)
+    if (model && model.id) {
+      utils.checkParams(req, {
+        name: false,
+        description: false,
+        attributes: false
+      })
+      if ('attributes' in req) {
+        req.attributes.map( item => {
+          utils.checkParams(item, {
+            name: true,
+            view_name: true,
+            value_type: true,
+            default_value: true,
+            unit: true
+          })
+        })
+        
+        await attributeModel.update({_id: model.attributeId}, {
+          updated_at: Date.now(),
+          list: req.attributes
+        })
+      }
+      let updates = {}
+      if ('name' in req) {
+        updates.name = req.name
+      }
+      if ('description' in req) {
+        updates.description = req.description
+      }
+      let newModel = await IotModelModel.updateById(modelId, updates)
+      ctx.body = newModel
+      ctx.status = 201
+    } else {
+      throw new HttpError(404)
+    }
   }
   /**
    * 删除模型
    * @param {*} ctx 
    */
   static async del(ctx) {
-    
+    let modelId = ctx.params.id
+    let model = await IotModelModel.selectById(modelId)
+    if (model && model.id) {
+      await attributeModel.remove({_id: model.attributeId})
+      await IotModelModel.deleteById(modelId)
+      ctx.status = 204
+      ctx.body = {}
+    } else {
+      throw new HttpError(404)
+    }
   }
 }
 
