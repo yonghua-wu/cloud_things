@@ -11,8 +11,8 @@ class IotModel {
     let userInfo = utils.jwtDecode(ctx.header.Authorization || ctx.header.authorization)
     let res = await IotModelModel.selectByUserId(userInfo.id)
     let list = res.map( item => {
-      let {id, name, description, createAt, updateAt} = item
-      return {id, name, description, createAt, updateAt}
+      let {id, name, description, createdAt, updatedAt} = item
+      return {id, name, description, createdAt, updatedAt}
     })
     ctx.body = {
       list
@@ -80,7 +80,7 @@ class IotModel {
     let row = {
       userId: userInfo.id,
       name: req.name,
-      description: req.description,
+      description: req.description || '',
       attributeId: res.id
     }
     res = {}
@@ -118,14 +118,8 @@ class IotModel {
           list: req.attributes
         })
       }
-      let updates = {}
-      if ('name' in req) {
-        updates.name = req.name
-      }
-      if ('description' in req) {
-        updates.description = req.description
-      }
-      let newModel = await IotModelModel.updateById(modelId, updates)
+      delete req.attributes
+      let newModel = await IotModelModel.updateById(modelId, req)
       ctx.body = newModel
       ctx.status = 201
     } else {
