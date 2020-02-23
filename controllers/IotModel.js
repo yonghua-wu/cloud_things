@@ -98,7 +98,6 @@ class IotModel {
     let model = await IotModelModel.selectById(modelId)
     if (model && model.id) {
       utils.checkParams(req, {
-        name: false,
         description: false,
         attributes: false
       })

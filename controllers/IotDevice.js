@@ -152,7 +152,6 @@ class IotDevice {
     let deviceId = ctx.params.id
     let req = ctx.request.body
     utils.checkParams(req, {
-      name: false,
       modelId: false,
       description: false,
       rules: false,
