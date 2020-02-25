@@ -12,10 +12,11 @@ class IotDevice {
   static async list(ctx) {
     let userInfo = utils.jwtDecode(ctx.header.Authorization || ctx.header.authorization)
     let res = await IotDeviceModel.selectByUserId(userInfo.id)
-    let list = res.map( item => {
+    let list = await Promise.all(res.map( async item => {
+      let detail = (await detailsModel.findOne({_id: item.detailsId})) || null
       let {id, name, description, createdAt, updatedAt} = item
-      return {id, name, description, createdAt, updatedAt}
-    })
+      return {id, name, description, createdAt, updatedAt, connected: detail && detail.connected}
+    }))
     ctx.body = {
       list
     }
