@@ -32,9 +32,9 @@ class IotModel {
         let {name, view_name, value_type, default_value, unit} = item
         return {
           name,
-          viewName: view_name,
-          valueType: value_type,
-          defaultValue: default_value,
+          view_name,
+          value_type,
+          default_value,
           unit
         }
       })
@@ -43,8 +43,8 @@ class IotModel {
         name: model.name,
         description: model.description,
         attributes: list,
-        createAt: model.createAt,
-        updateAt: model.updateAt
+        createdAt: model.createdAt,
+        updatedAt: model.updatedAt
       }
       ctx.status = 200
     } else {

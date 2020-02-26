@@ -59,8 +59,8 @@ IotModel.init({
 })
 
 if (process.env.NODE_ENV === 'development') { // 开发模式开启同步
-  db.sync({ force: true })
-  // db.sync()
+  // db.sync({ force: true })
+  db.sync()
 }
 
 class IotModelModel {
