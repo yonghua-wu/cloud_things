@@ -47,6 +47,7 @@ class IotDevice {
           return {
             name: item.name,
             condition: item.condition,
+            value: item.value,
             notice_leven: item.notice_leven
           }
         })
@@ -94,6 +95,7 @@ class IotDevice {
         utils.checkParams(item, {
           name: true,
           condition: true,
+          value: true,
           notice_leven: true
         })
       })
@@ -128,6 +130,7 @@ class IotDevice {
         return {
           name: item.name,
           condition: item.condition,
+          value: item.value,
           notice_leven: item.notice_leven
         }
       }),
@@ -165,6 +168,7 @@ class IotDevice {
           utils.checkParams(item, {
             name: true,
             condition: true,
+            value: true,
             notice_leven: true
           })
         })
@@ -194,6 +198,7 @@ class IotDevice {
           return {
             name: item.name,
             condition: item.condition,
+            value: item.value,
             notice_leven: item.notice_leven
           }
         })
